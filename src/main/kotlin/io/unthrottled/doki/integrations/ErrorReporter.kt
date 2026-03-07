@@ -5,7 +5,6 @@ import com.intellij.ide.IdeBundle
 import com.intellij.ide.ui.LafManager
 import com.intellij.openapi.application.ApplicationInfo
 import com.intellij.openapi.application.ApplicationNamesInfo
-import com.intellij.openapi.application.ex.ApplicationInfoEx
 import com.intellij.openapi.diagnostic.ErrorReportSubmitter
 import com.intellij.openapi.diagnostic.IdeaLoggingEvent
 import com.intellij.openapi.diagnostic.SubmittedReportInfo
@@ -25,7 +24,7 @@ import io.unthrottled.doki.util.runSafelyWithResult
 import java.awt.Component
 import java.lang.management.ManagementFactory
 import java.text.SimpleDateFormat
-import java.util.Properties
+import java.util.*
 import java.util.stream.Collectors
 
 class ErrorReporter : ErrorReportSubmitter() {
@@ -133,7 +132,7 @@ class ErrorReporter : ErrorReportSubmitter() {
   }
 
   private fun getAppName(): Pair<ApplicationInfo, String> {
-    val appInfo = ApplicationInfoEx.getInstanceEx() as ApplicationInfo
+    val appInfo = ApplicationInfo.getInstance()
     var appName = appInfo.fullApplicationName
     val edition = ApplicationNamesInfo.getInstance().editionName
     if (edition != null) appName += " ($edition)"
