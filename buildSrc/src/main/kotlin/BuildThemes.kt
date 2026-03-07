@@ -63,9 +63,9 @@ fun String.getStickerName(): String = this.substring(this.lastIndexOf("/") + 1)
 open class BuildThemes : DefaultTask() {
 
   companion object {
-    private const val COMMUNITY_PLUGIN_ID = "io.acari.DDLCTheme"
+    private const val COMMUNITY_PLUGIN_ID = "io.unthrottled.DokiThemeV2"
     private const val ULTIMATE_PLUGIN_ID = "io.unthrottled.DokiTheme"
-    private const val PLUGIN_NAME = "Doki Theme"
+    private const val PLUGIN_NAME = "Doki Theme v2"
     private const val DOKI_THEME_ULTIMATE = "ultimate"
   }
 

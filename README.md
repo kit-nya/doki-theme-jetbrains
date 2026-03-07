@@ -1,4 +1,4 @@
-Doki Theme: Jetbrains IDEs
+Doki Theme v2: Jetbrains IDEs
 ---
 
 ![Downloads](https://img.shields.io/jetbrains/plugin/d/10804)
@@ -72,7 +72,7 @@ You can choose themes based on characters from these various Anime, Manga, or Vi
 
 - Using IDE built-in plugin system:
 
-  <kbd>Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "Doki Theme"</kbd> >
+  <kbd>Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "Doki Theme v2"</kbd> >
   <kbd>Install Plugin</kbd>
 
 - Manually:

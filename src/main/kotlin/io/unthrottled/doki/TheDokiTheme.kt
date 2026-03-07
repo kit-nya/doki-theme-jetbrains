@@ -34,7 +34,7 @@ import java.util.UUID
 
 class TheDokiTheme : Disposable {
   companion object {
-    const val COMMUNITY_PLUGIN_ID = "io.acari.DDLCTheme"
+    const val COMMUNITY_PLUGIN_ID = "io.unthrottled.DokiThemeV2"
     private const val ULTIMATE_PLUGIN_ID = "io.unthrottled.DokiTheme"
 
     val instance: TheDokiTheme

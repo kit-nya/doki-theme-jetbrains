@@ -1,6 +1,6 @@
 <idea-plugin require-restart="true">
-  <id>io.acari.DDLCTheme</id>
-  <name>Doki Theme</name>
+  <id>io.unthrottled.DokiThemeV2</id>
+  <name>Doki Theme v2</name>
   <version>@version@</version>
   <vendor email="alexsimons9999@gmail.com" url="https://github.com/Unthrottled">Unthrottled</vendor>
   <description>
