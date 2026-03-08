@@ -3,7 +3,6 @@ package io.unthrottled.doki.promotions
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationGroupManager
-import com.intellij.notification.NotificationListener
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.extensions.PluginId
@@ -58,8 +57,8 @@ class AniMemePromotionDialog(
     MessageBundle.message("amii.name")
   }
 
-  private val notificationGroup =
-    NotificationGroupManager.getInstance()
+  private val notificationGroup
+    get() = NotificationGroupManager.getInstance()
       .getNotificationGroup("Doki Theme Promotions")
 
   @Suppress("MaxLineLength")
@@ -131,7 +130,6 @@ class AniMemePromotionDialog(
         .setIcon(DokiIcons.General.PLUGIN_LOGO)
         .addAction(installAction)
         .addAction(neverShowAction)
-        .setListener(NotificationListener.UrlOpeningListener(false))
 
     updateNotification.whenExpired {
       emitStatus(PromotionStatus.BLOCKED)

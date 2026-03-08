@@ -62,6 +62,7 @@ public class ThemeSettingsUI implements SearchableConfigurable, Configurable.NoS
   private JTextPane generalLinks;
   private JSlider notificationOpacitySlider;
   private JCheckBox makeNotificationsTransparentCheckBox;
+  private JCheckBox beholdModeCheckBox;
   private JCheckBox themeChangeAnimationCheckBox;
   private JSpinner customFontSize;
   private JCheckBox overrideEditorFontSizeCheckBox;
@@ -233,6 +234,10 @@ public class ThemeSettingsUI implements SearchableConfigurable, Configurable.NoS
       notificationOpacitySlider.setEnabled(makeNotificationsTransparentCheckBox.isSelected());
       themeSettingsModel.setSeeThroughNotifications(makeNotificationsTransparentCheckBox.isSelected());
     });
+    beholdModeCheckBox.setSelected(initialThemeSettingsModel.isBeholdMode());
+    beholdModeCheckBox.addActionListener(e ->
+      themeSettingsModel.setBeholdMode(beholdModeCheckBox.isSelected())
+    );
     notificationOpacitySlider.setForeground(UIUtil.getContextHelpForeground());
     notificationOpacitySlider.setEnabled(initialThemeSettingsModel.isSeeThroughNotifications());
     notificationOpacitySlider.setValue(initialThemeSettingsModel.getNotificationOpacity());
@@ -368,6 +373,7 @@ public class ThemeSettingsUI implements SearchableConfigurable, Configurable.NoS
     nameInStatusBarCheckBox.setEnabled(!discreetModeOn);
     notificationOpacitySlider.setEnabled(!discreetModeOn);
     makeNotificationsTransparentCheckBox.setEnabled(!discreetModeOn);
+    beholdModeCheckBox.setEnabled(!discreetModeOn);
   }
 
   private void updatePrimaryStickerDimensionCapComponents() {

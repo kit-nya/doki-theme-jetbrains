@@ -1,8 +1,10 @@
 package io.unthrottled.doki.settings;
 
-import com.intellij.ide.util.BrowseFilesListener;
+import com.intellij.openapi.fileChooser.FileChooser;
+import com.intellij.openapi.fileChooser.FileChooserDescriptor;
+import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.BrowseFolderRunnable;
+import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.TextComponentAccessor;
 import com.intellij.ui.components.fields.ExtendableTextField;
@@ -35,16 +37,18 @@ public class CustomStickerChooser extends DialogWrapper {
 
   private void createUIComponents() {
     ExtendableTextField extendableTextField = new ExtendableTextField();
-    textField1 = extendableTextField.addBrowseExtension(
-      new BrowseFolderRunnable<>(
-        MessageBundle.message("settings.general.content.custom.sticker.modal.chooser.title"),
-        MessageBundle.message("settings.general.content.custom.sticker.modal.chooser.description"),
-        null,
-        BrowseFilesListener.SINGLE_FILE_DESCRIPTOR,
-        extendableTextField,
-        TextComponentAccessor.TEXT_FIELD_WHOLE_TEXT
-      ), null
+    extendableTextField.addBrowseExtension(
+      () -> {
+        FileChooserDescriptor descriptor = FileChooserDescriptorFactory.createSingleFileDescriptor();
+        descriptor.setTitle(MessageBundle.message("settings.general.content.custom.sticker.modal.chooser.title"));
+        descriptor.setDescription(MessageBundle.message("settings.general.content.custom.sticker.modal.chooser.description"));
+        VirtualFile file = FileChooser.chooseFile(descriptor, null, null);
+        if (file != null) {
+          extendableTextField.setText(file.getPath());
+        }
+      }, null
     );
+    textField1 = extendableTextField;
   }
 
   public String getPath() {

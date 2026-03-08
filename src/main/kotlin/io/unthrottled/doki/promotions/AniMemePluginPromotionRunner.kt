@@ -1,6 +1,6 @@
 package io.unthrottled.doki.promotions
 
-import com.intellij.ide.IdeEventQueue
+import com.intellij.ide.IdleTracker
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManager
@@ -37,20 +37,20 @@ class AniMemePluginPromotionRunner(
   private val onReject: () -> Unit,
 ) : Runnable {
   init {
-    IdeEventQueue.getInstance().addIdleListener(
-      this,
+    IdleTracker.getInstance().addIdleListener(
       TimeUnit.MILLISECONDS.convert(
         5,
         TimeUnit.MINUTES,
       ).toInt() +
         Random(System.currentTimeMillis())
           .nextInt(0, 2000),
+      this,
     )
   }
 
   override fun run() {
     AniMemePluginPromotion.runPromotion(onPromotion, onReject)
-    IdeEventQueue.getInstance().removeIdleListener(this)
+    IdleTracker.getInstance().removeIdleListener(this)
   }
 }
 
@@ -62,25 +62,19 @@ object AniMemePluginPromotion {
     ApplicationManager.getApplication().executeOnPooledThread {
       ThemeManager.instance.currentTheme.ifPresent { dokiTheme ->
         val promotionAssets = PromotionAssets(dokiTheme)
-        EdtScheduledExecutorService.getInstance().schedule(
-          {
-            getFirstProject()
-              .doOrElse(
-                { project ->
-                  ApplicationManager.getApplication().invokeLater {
-                    AniMemePromotionDialog(
-                      promotionAssets,
-                      project,
-                      onPromotion,
-                    ).show()
-                  }
-                },
-                onReject,
-              )
-          },
-          0,
-          TimeUnit.SECONDS,
-        )
+        ApplicationManager.getApplication().invokeLater {
+          getFirstProject()
+            .doOrElse(
+              { project ->
+                AniMemePromotionDialog(
+                  promotionAssets,
+                  project,
+                  onPromotion,
+                ).show()
+              },
+              onReject,
+            )
+        }
       }
     }
   }

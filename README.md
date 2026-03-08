@@ -21,9 +21,11 @@ Doki Theme v2: Jetbrains IDEs
 
 ---
 
+<!-- Plugin description -->
 Cute themes based on cute anime characters. With over **60** themes, the one you like the best, is probably here.
 
 You can choose themes based on characters from these various Anime, Manga, or Visual Novels:
+<!-- Plugin description end -->
 
 <details>
   <summary>All Featured Titles</summary>

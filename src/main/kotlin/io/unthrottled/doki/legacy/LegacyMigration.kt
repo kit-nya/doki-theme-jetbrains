@@ -5,7 +5,6 @@ import com.intellij.notification.NotificationAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.extensions.PluginId
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.startup.StartupManager
 import com.intellij.openapi.updateSettings.impl.pluginsAdvertisement.installAndEnable
 import io.unthrottled.doki.config.ThemeConfig
 import io.unthrottled.doki.notification.UpdateNotification
@@ -37,9 +36,7 @@ object LegacyMigration {
       ThemeConfig.instance.isMaterialPSIIcons = false
 
       if (PluginService.areIconsInstalled().not()) {
-        StartupManager.getInstance(project).runWhenProjectIsInitialized {
-          showMaterialMigrationMessage(project)
-        }
+        showMaterialMigrationMessage(project)
       }
     }
   }

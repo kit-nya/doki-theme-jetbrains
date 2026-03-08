@@ -18,6 +18,7 @@ import io.unthrottled.doki.legacy.EXPUIFixer
 import io.unthrottled.doki.legacy.LegacyMigration
 import io.unthrottled.doki.notification.UpdateNotification
 import io.unthrottled.doki.promotions.PromotionManager
+import io.unthrottled.doki.service.BeholdService
 import io.unthrottled.doki.service.ConsoleFontService.applyConsoleFont
 import io.unthrottled.doki.service.CustomFontSizeService.applyCustomFontSize
 import io.unthrottled.doki.service.UpdateNotificationUpdater
@@ -61,7 +62,7 @@ class TheDokiTheme : Disposable {
     IconPathReplacementComponent.initialize()
     EXPUIFixer.fixExperimentalUI()
     installAllUIComponents()
-    applyFonts()
+    applyEditorSettings()
 
     connection.subscribe(
       ApplicationActivationListener.TOPIC,
@@ -82,7 +83,7 @@ class TheDokiTheme : Disposable {
           .doOrElse({
             setSVGColorPatcher(it)
             installAllUIComponents()
-            applyFonts()
+            applyEditorSettings()
             attemptToRefreshUpdateNotification(it)
           }) {
             IconPathReplacementComponent.removePatchers()
@@ -92,9 +93,10 @@ class TheDokiTheme : Disposable {
     )
   }
 
-  private fun applyFonts() {
+  private fun applyEditorSettings() {
     applyCustomFontSize()
     applyConsoleFont()
+    BeholdService.instance.onBeholdModeChanged()
   }
 
   fun projectOpened(project: Project) {
@@ -110,7 +112,9 @@ class TheDokiTheme : Disposable {
     getVersion()
       .ifPresent { version ->
         if (version != ThemeConfig.instance.version) {
-          LegacyMigration.newVersionMigration(project)
+          ApplicationManager.getApplication().invokeLater {
+            LegacyMigration.newVersionMigration(project)
+          }
           ThemeConfig.instance.version = version
           ThemeManager.instance.currentTheme.ifPresent {
             ApplicationManager.getApplication().invokeLater {

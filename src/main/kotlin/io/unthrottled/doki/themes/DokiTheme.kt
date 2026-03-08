@@ -111,6 +111,9 @@ class DokiTheme(
   val identifierHighlight: Color
     get() = getColor("identifierHighlight")
 
+  val textEditorBackground: Color
+    get() = getColor("textEditorBackground")
+
   val editorAccentColor: Color
     get() = getColor("editorAccentColor")
 

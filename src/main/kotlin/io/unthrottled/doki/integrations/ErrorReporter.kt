@@ -93,11 +93,11 @@ class ErrorReporter : ErrorReportSubmitter() {
       setExtra("Build Info", getBuildInfo(appInfo))
       setExtra("JRE", getJRE(properties))
       setExtra("VM", getVM(properties))
-      setExtra("System Info", SystemInfo.getOsNameAndVersion())
+      setExtra("System Info", "${SystemInfo.OS_NAME} ${SystemInfo.OS_VERSION}")
       setExtra("GC", getGC())
       setExtra("Memory", Runtime.getRuntime().maxMemory() / FileUtilRt.MEGABYTE)
       setExtra("Cores", Runtime.getRuntime().availableProcessors())
-      setExtra("Current LAF", LafManager.getInstance()?.currentLookAndFeel?.name ?: "")
+      setExtra("Current LAF", LafManager.getInstance()?.currentUIThemeLookAndFeel?.name ?: "")
       setExtra("Doki Version", ThemeConfig.instance.version)
       setExtra("Doki Config", Gson().toJson(ThemeConfig.instance))
     }
@@ -126,7 +126,7 @@ class ErrorReporter : ErrorReportSubmitter() {
     if (appInfo.build.isSnapshot) {
       buildDate = SimpleDateFormat("HH:mm, ").format(cal.time)
     }
-    buildDate += DateFormatUtil.formatAboutDialogDate(cal.time)
+    buildDate += DateFormatUtil.formatDate(cal.time)
     buildInfo += IdeBundle.message("about.box.build.date", buildDate)
     return buildInfo
   }

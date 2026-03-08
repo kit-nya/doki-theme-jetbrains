@@ -7,6 +7,7 @@ import com.intellij.util.ui.FontInfo
 import io.unthrottled.doki.config.THEME_CONFIG_TOPIC
 import io.unthrottled.doki.config.ThemeConfig
 import io.unthrottled.doki.settings.actors.BackgroundActor
+import io.unthrottled.doki.settings.actors.BeholdActor
 import io.unthrottled.doki.settings.actors.ConsoleFontActor
 import io.unthrottled.doki.settings.actors.CustomFontSizeActor
 import io.unthrottled.doki.settings.actors.DiscreetModeActor
@@ -57,6 +58,7 @@ data class ThemeSettingsModel(
   var hideDelayMS: Int,
   var isSeeThroughNotifications: Boolean,
   var notificationOpacity: Int,
+  var isBeholdMode: Boolean,
 ) {
   fun duplicate(): ThemeSettingsModel = copy()
 }
@@ -90,6 +92,7 @@ object ThemeSettings {
       customFontSizeValue = ThemeConfig.instance.customFontSize,
       isSeeThroughNotifications = ThemeConfig.instance.isSeeThroughNotifications,
       notificationOpacity = ThemeConfig.instance.notificationOpacity,
+      isBeholdMode = ThemeConfig.instance.isBeholdMode,
       isOverrideConsoleFont = ThemeConfig.instance.isOverrideConsoleFont,
       consoleFontValue = ThemeConfig.instance.consoleFontName,
       maxStickerHeight = ThemeConfig.instance.maxStickerHeight,
@@ -142,6 +145,7 @@ object ThemeSettings {
       themeSettingsModel.isSeeThroughNotifications,
       themeSettingsModel.notificationOpacity,
     )
+    BeholdActor.enableBeholdMode(themeSettingsModel.isBeholdMode)
     DiscreetModeActor.enableDiscreetMode(themeSettingsModel.discreetMode)
     StickerHideActor.setStickerHideStuff(themeSettingsModel.hideOnHover, themeSettingsModel.hideDelayMS)
     PromotionSettingActor.optInToPromotion(themeSettingsModel.allowPromotionalContent)

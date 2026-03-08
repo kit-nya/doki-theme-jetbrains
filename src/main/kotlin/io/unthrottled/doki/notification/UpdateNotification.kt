@@ -4,7 +4,6 @@ import com.intellij.ide.plugins.PluginManager
 import com.intellij.ide.plugins.PluginManagerCore.getPlugin
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationGroupManager
-import com.intellij.notification.NotificationListener
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.application.ApplicationManager
@@ -311,27 +310,23 @@ fun getAnchor(position: IdeBackgroundUtil.Anchor): String {
 }
 
 object UpdateNotification : Logging {
-  private val notificationGroup =
-    NotificationGroupManager.getInstance()
+  private val notificationGroup
+    get() = NotificationGroupManager.getInstance()
       .getNotificationGroup("Doki Theme Updates")
-
-  private val defaultListener = NotificationListener.UrlOpeningListener(false)
 
   fun showDokiNotification(
     @Nls(capitalization = Nls.Capitalization.Sentence) title: String = "",
     @Nls(capitalization = Nls.Capitalization.Sentence) content: String,
     project: Project? = null,
-    listener: NotificationListener = defaultListener,
     actions: List<AnAction> = emptyList(),
   ) {
-    val notification = buildNotification(content, title, listener, actions)
+    val notification = buildNotification(content, title, actions)
     notification.notify(project)
   }
 
   private fun buildNotification(
     content: String,
     title: String,
-    listener: NotificationListener,
     actions: List<AnAction>,
   ): Notification {
     val notification =
@@ -340,7 +335,6 @@ object UpdateNotification : Logging {
         NotificationType.INFORMATION,
       )
         .setTitle(title)
-        .setListener(listener)
         .setIcon(DokiIcons.General.PLUGIN_LOGO)
     actions.forEach {
       notification.addAction(it)
@@ -354,11 +348,10 @@ object UpdateNotification : Logging {
     @Nls(capitalization = Nls.Capitalization.Sentence) title: String = "",
     @Nls(capitalization = Nls.Capitalization.Sentence) content: String,
     project: Project,
-    listener: NotificationListener = defaultListener,
     actions: List<AnAction> = emptyList(),
     balloonPosition: BalloonPosition,
   ) {
-    val notification = buildNotification(content, title, listener, actions)
+    val notification = buildNotification(content, title, actions)
     BalloonTools.showStickyNotification(
       project,
       notification,
@@ -370,11 +363,10 @@ object UpdateNotification : Logging {
   fun showNotificationAcrossProjects(
     @Nls(capitalization = Nls.Capitalization.Sentence) title: String = "",
     @Nls(capitalization = Nls.Capitalization.Sentence) content: String,
-    listener: NotificationListener = defaultListener,
     actions: List<(Project?) -> AnAction> = emptyList(),
   ) {
     ProjectManager.getInstance().openProjects.forEach { project ->
-      showDokiNotification(title, content, project, listener, actions.map { it(project) })
+      showDokiNotification(title, content, project, actions.map { it(project) })
     }
   }
 
@@ -387,7 +379,6 @@ object UpdateNotification : Logging {
       title,
       message,
       project = project,
-      listener = defaultListener,
     )
   }
 

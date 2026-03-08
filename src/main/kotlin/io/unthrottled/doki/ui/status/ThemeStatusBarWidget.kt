@@ -13,7 +13,7 @@ import com.intellij.util.Consumer
 import io.unthrottled.doki.config.THEME_CONFIG_TOPIC
 import io.unthrottled.doki.config.ThemeConfig
 import io.unthrottled.doki.config.ThemeConfigListener
-import io.unthrottled.doki.settings.ThemeSettings.THEME_SETTINGS_DISPLAY_NAME
+import io.unthrottled.doki.settings.ThemeSettingsUI
 import io.unthrottled.doki.themes.ThemeManager
 import io.unthrottled.doki.util.toOptional
 import java.awt.event.MouseEvent
@@ -83,10 +83,10 @@ class ThemeStatusBarWidget(private val project: Project) :
         {
           ShowSettingsUtil.getInstance().showSettingsDialog(
             project,
-            THEME_SETTINGS_DISPLAY_NAME,
+            ThemeSettingsUI::class.java,
           )
         },
-        ModalityState.NON_MODAL,
+        ModalityState.nonModal(),
       )
     }
 }

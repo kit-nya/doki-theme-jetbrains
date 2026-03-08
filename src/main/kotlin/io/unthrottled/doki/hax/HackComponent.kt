@@ -457,6 +457,13 @@ object HackComponent : Disposable {
         },
       )
 
+      runSafely({
+        val isEditorBackgroundImageSetMethod = ctClass2.getDeclaredMethod("isEditorBackgroundImageSet")
+        isEditorBackgroundImageSetMethod.setBody("{ return true; }")
+      }) {
+        log.warn("Unable to hack isEditorBackgroundImageSet for reasons.")
+      }
+
       ctClass2.toClass()
     }) {
       log.warn("Unable to hackBackgroundPaintingComponent for reasons.")

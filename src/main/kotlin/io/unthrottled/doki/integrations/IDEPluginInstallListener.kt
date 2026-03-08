@@ -17,6 +17,7 @@ class IDEPluginInstallListener : DynamicPluginListener, Logging {
   ) {
   }
 
+  @Deprecated("Deprecated in interface")
   override fun checkUnloadPlugin(pluginDescriptor: IdeaPluginDescriptor) {
   }
 
