@@ -43,6 +43,9 @@ jobs:
       - name: Fetch Sources
         uses: actions/checkout@v6
 
+      - name: Get Master Themes
+        run: ./getMasterThemes.sh
+
       # Set up the Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v5
@@ -82,6 +85,9 @@ jobs:
       # Check out the current repository
       - name: Fetch Sources
         uses: actions/checkout@v6
+
+      - name: Get Master Themes
+        run: ./getMasterThemes.sh
 
       # Set up the Java environment for the next steps
       - name: Setup Java
@@ -140,6 +146,9 @@ jobs:
           ref: ${{ github.event.pull_request.head.sha }} # to check out the actual pull request commit, not the merge commit
           fetch-depth: 0 # a full history is required for pull request analysis
 
+      - name: Get Master Themes
+        run: ./getMasterThemes.sh
+
       # Set up the Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v5
@@ -170,6 +179,9 @@ jobs:
       # Check out the current repository
       - name: Fetch Sources
         uses: actions/checkout@v6
+
+      - name: Get Master Themes
+        run: ./getMasterThemes.sh
 
       # Set up the Java environment for the next steps
       - name: Setup Java
@@ -210,6 +222,9 @@ jobs:
       # Check out the current repository
       - name: Fetch Sources
         uses: actions/checkout@v6
+
+      - name: Get Master Themes
+        run: ./getMasterThemes.sh
 
       # Set up the Java environment for the next steps
       - name: Setup Java

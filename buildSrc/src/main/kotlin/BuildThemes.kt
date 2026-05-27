@@ -528,16 +528,19 @@ open class BuildThemes : DefaultTask() {
       val attributeKey = it.key
       attributeKey to when (val value = it.value) {
         is String -> valueResolver(value, colors)
-        is Map<*, *> -> resolveNamedColorsForMap(
-          value as MutableMap<String, Any>,
-          colors
-        ) { valToResolve, namedColors ->
-          if (attributeKey == "ColorPalette") {
-            // ColorPalette is special, they need the hex in place of just
-            // the "namedColor" value.
-            namedColors.getOrDefault(valToResolve, valToResolve)
-          } else {
-            valueResolver(valToResolve, namedColors)
+        is Map<*, *> -> {
+          @Suppress("UNCHECKED_CAST")
+          resolveNamedColorsForMap(
+            value as MutableMap<String, Any>,
+            colors
+          ) { valToResolve, namedColors ->
+            if (attributeKey == "ColorPalette") {
+              // ColorPalette is special, they need the hex in place of just
+              // the "namedColor" value.
+              namedColors.getOrDefault(valToResolve, valToResolve)
+            } else {
+              valueResolver(valToResolve, namedColors)
+            }
           }
         }
 

@@ -1,5 +1,6 @@
 ## [Unreleased]
 - Added github actions for CI
+- Merged change to fix file names appearing weird when zooming
 
 ## 88.5-1.16.3
 - Build fixes and upstream merges
