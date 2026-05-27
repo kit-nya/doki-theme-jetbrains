@@ -1,6 +1,7 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import org.jetbrains.intellij.platform.gradle.IntelliJPlatformType
 import java.util.Base64
 
 fun decodeBase64(value: String?): String? {
@@ -139,7 +140,7 @@ intellijPlatform {
 
   pluginVerification {
     ides {
-      recommended()
+      create(IntelliJPlatformType.IntellijIdeaUltimate, providers.gradleProperty("platformVersion"))
     }
   }
 }
@@ -161,6 +162,14 @@ kover {
         onCheck = true
       }
     }
+  }
+}
+
+configurations.all {
+  resolutionStrategy {
+    force("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
+    force("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.8.1")
+    force("org.jetbrains.kotlinx:kotlinx-coroutines-debug:1.8.1")
   }
 }
 
