@@ -46,6 +46,9 @@ public class ThemeSettingsUI implements SearchableConfigurable, Configurable.NoS
   private final ThemeSettingsModel themeSettingsModel = ThemeSettings.createThemeSettingsModel();
   private ThemeSettingsModel initialThemeSettingsModel = ThemeSettings.createThemeSettingsModel();
 
+  public ThemeSettingsUI() {
+  }
+
   private JTabbedPane fontTabPane;
   private JPanel rootPane;
   private JComboBox currentThemeWomboComboBox;
@@ -428,9 +431,9 @@ public class ThemeSettingsUI implements SearchableConfigurable, Configurable.NoS
         "        }\n" +
         "    </style>\n" +
         "</head>\n" +
-        "<a href='https://github.com/doki-theme/doki-theme-jetbrains#documentation'>View Documentation</a><br/><br/>\n" +
-        "<a href='https://github.com/doki-theme/doki-theme-jetbrains/blob/main/changelog/CHANGELOG.md'>See Changelog</a><br/><br/>\n" +
-        "<a href='https://github.com/doki-theme/doki-theme-jetbrains/issues'>Report Issue</a><br/><br/>\n" +
+        "<a href='https://github.com/kit-nya/doki-theme-jetbrains/#documentation'>View Documentation</a><br/><br/>\n" +
+        "<a href='https://github.com/kit-nya/doki-theme-jetbrains/blob/main/CHANGELOG.md'>See Changelog</a><br/><br/>\n" +
+        "<a href='https://github.com/kit-nya/doki-theme-jetbrains/issues'>Report Issue</a><br/><br/>\n" +
         "</div>\n" +
         "</html>"
     );

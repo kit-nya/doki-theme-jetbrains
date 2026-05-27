@@ -119,7 +119,7 @@ good [resource for customizing themes](https://github.com/one-dark/jetbrains-one
 
 ### Submitting PR
 
-This is an [example of editing existing themes](https://github.com/doki-theme/doki-theme-jetbrains/pull/391).
+This is an [example of editing existing themes](https://github.com/kit-nya/doki-theme-jetbrains/pull/391).
 
 # Creating New Themes
 
@@ -211,7 +211,7 @@ yarn generateTemplates
 ```
 
 If you added a new anime, you'll need to add
-a [new group mapping](https://github.com/doki-theme/doki-theme-jetbrains/blob/10b421a915adb20b66f9246f80f563dd13ad73c0/buildSrc/src/main/kotlin/Tools.kt#L2)
+a [new group mapping](https://github.com/kit-nya/doki-theme-jetbrains/blob/10b421a915adb20b66f9246f80f563dd13ad73c0/buildSrc/src/main/kotlin/Tools.kt#L2)
 The code defined in the `buildSrc/src` directory is part of the Doki Theme gradle plugin, which exposes a `buildThemes`
 task. This task gets run everytime you run the IDE, or build the plugin. It does all the annoying tedious stuff such as:
 
@@ -223,12 +223,12 @@ When making changes to the JetBrains templates, there are two options for the ed
 - `template` - which expects the name of the initial parent, and outputs an editor scheme evaluted for the master theme
   definition.
 - `templateExtension` - takes the name of the `file` in the same
-  directory. [Here is an example](https://github.com/doki-theme/doki-theme-jetbrains/blob/main/buildSrc/assets/themes/swordArtOnline/asuna/dark/asuna.dark.jetbrains.definition.json)
+  directory. [Here is an example](https://github.com/kit-nya/doki-theme-jetbrains/blob/main/buildSrc/assets/themes/swordArtOnline/asuna/dark/asuna.dark.jetbrains.definition.json)
   .
 
 Once you have completed all of those steps, you've got all the things available to you to create a brand-new theme!
 
-[Here is an example pull request that captures all the artifacts from the development process of new themes](https://github.com/doki-theme/doki-theme-jetbrains/pull/407/files)
+[Here is an example pull request that captures all the artifacts from the development process of new themes](https://github.com/kit-nya/doki-theme-jetbrains/pull/407/files)
 .
 
 Here are all the relevant gradle tasks you'll be using:

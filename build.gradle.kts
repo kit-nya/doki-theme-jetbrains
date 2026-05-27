@@ -1,6 +1,17 @@
 import org.jetbrains.changelog.Changelog
 import org.jetbrains.changelog.markdownToHTML
 import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+import java.util.Base64
+
+fun decodeBase64(value: String?): String? {
+  return value?.let {
+    try {
+      String(Base64.getDecoder().decode(it.trim()))
+    } catch (e: Exception) {
+      it // If it's not base64, return it as-is
+    }
+  }
+}
 
 plugins {
   // Custom plugin for building all the themes
@@ -74,7 +85,7 @@ configurations {
 // Configure IntelliJ Platform Gradle Plugin - read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin-extension.html
 intellijPlatform {
   instrumentCode = true
-  buildSearchableOptions = true
+  buildSearchableOptions = false
   pluginConfiguration {
     name = providers.gradleProperty("pluginName")
     version = providers.gradleProperty("pluginVersion")
@@ -114,8 +125,8 @@ intellijPlatform {
   }
 
   signing {
-    certificateChain = providers.environmentVariable("CERTIFICATE_CHAIN")
-    privateKey = providers.environmentVariable("PRIVATE_KEY")
+    certificateChain = providers.environmentVariable("CERTIFICATE_CHAIN").map { decodeBase64(it) }
+    privateKey = providers.environmentVariable("PRIVATE_KEY").map { decodeBase64(it) }
     password = providers.environmentVariable("PRIVATE_KEY_PASSWORD")
   }
 
@@ -136,8 +147,8 @@ intellijPlatform {
 
 // Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
 changelog {
-  path.set(file("changelog/CHANGELOG.md").path)
-  headerParserRegex.set("""^(\d+\.\d+-\d+\.\d+\.\d+)""".toRegex())
+  path.set(file("CHANGELOG.md").path)
+  headerParserRegex.set("""^\[?([^\]\s]+)\]?.*""".toRegex())
   groups.empty()
   repositoryUrl = providers.gradleProperty("pluginRepositoryUrl")
   versionPrefix = ""

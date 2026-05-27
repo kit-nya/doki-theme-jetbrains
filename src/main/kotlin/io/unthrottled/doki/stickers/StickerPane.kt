@@ -394,7 +394,7 @@ internal class StickerPane(
         // Java 9+ Does automatic DPI scaling,
         // but we want to ignore that, cause the sticker
         // will grow to be pixelated
-        // fixes https://github.com/doki-theme/doki-theme-jetbrains/issues/465
+        // fixes https://github.com/kit-nya/doki-theme-jetbrains/issues/465
         override fun paintComponent(g: Graphics) {
           if (g is Graphics2D) {
             val t: AffineTransform = g.transform

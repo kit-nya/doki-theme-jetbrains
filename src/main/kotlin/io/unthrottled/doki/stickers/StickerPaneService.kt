@@ -213,7 +213,7 @@ class StickerPaneService {
           }
         }
         .forEach { it.detach() }
-      repaintWindows() // removes sticker residue (see https://github.com/doki-theme/doki-theme-jetbrains/issues/362)
+      repaintWindows() // removes sticker residue (see https://github.com/kit-nya/doki-theme-jetbrains/issues/362)
     }
   }
 

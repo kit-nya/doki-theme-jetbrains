@@ -4,13 +4,17 @@ import com.intellij.ide.IdleTracker
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.project.ProjectManager
-import com.intellij.util.concurrency.EdtScheduledExecutorService
 import io.unthrottled.doki.themes.ThemeManager
 import io.unthrottled.doki.util.doOrElse
 import io.unthrottled.doki.util.toOptional
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 import java.util.Optional
-import java.util.concurrent.TimeUnit
 import kotlin.random.Random
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.minutes
 
 enum class PromotionStatus {
   ACCEPTED,
@@ -35,22 +39,18 @@ object AniMemePromotionService {
 class AniMemePluginPromotionRunner(
   private val onPromotion: (PromotionResults) -> Unit,
   private val onReject: () -> Unit,
-) : Runnable {
+) {
   init {
-    IdleTracker.getInstance().addIdleListener(
-      TimeUnit.MILLISECONDS.convert(
-        5,
-        TimeUnit.MINUTES,
-      ).toInt() +
-        Random(System.currentTimeMillis())
-          .nextInt(0, 2000),
-      this,
-    )
-  }
-
-  override fun run() {
-    AniMemePluginPromotion.runPromotion(onPromotion, onReject)
-    IdleTracker.getInstance().removeIdleListener(this)
+    (ApplicationManager.getApplication() as CoroutineScope).launch {
+      val timeout = 5.minutes + Random.nextInt(0, 2000).milliseconds
+      while (true) {
+        val event = withTimeoutOrNull(timeout) {
+          IdleTracker.getInstance().events.first()
+        }
+        if (event == null) break
+      }
+      AniMemePluginPromotion.runPromotion(onPromotion, onReject)
+    }
   }
 }
 

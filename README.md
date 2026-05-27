@@ -1,10 +1,10 @@
 Doki Theme v2: Jetbrains IDEs
 ---
 
-![Downloads](https://img.shields.io/jetbrains/plugin/d/10804)
-![Rating](https://img.shields.io/jetbrains/plugin/r/rating/10804)
-![Version](https://img.shields.io/jetbrains/plugin/v/10804)
-![Build](https://github.com/doki-theme/doki-theme-jetbrains/workflows/Release/badge.svg)
+![Downloads](https://img.shields.io/jetbrains/plugin/d/30534)
+![Rating](https://img.shields.io/jetbrains/plugin/r/rating/30534)
+![Version](https://img.shields.io/jetbrains/plugin/v/30534)
+![Build](https://github.com/kit-nya/doki-theme-jetbrains/workflows/Release/badge.svg)
 
 ### https://doki-theme.unthrottled.io/
 
@@ -22,10 +22,9 @@ Doki Theme v2: Jetbrains IDEs
 ---
 
 <!-- Plugin description -->
-Cute themes based on cute anime characters. With over **60** themes, the one you like the best, is probably here.
+Cute themes based on cute anime characters. With over **80** themes, the one you like the best, is probably here.
 
 You can choose themes based on characters from these various Anime, Manga, or Visual Novels:
-<!-- Plugin description end -->
 
 <details>
   <summary>All Featured Titles</summary>
@@ -69,6 +68,7 @@ You can choose themes based on characters from these various Anime, Manga, or Vi
 - Yuru Camp
 
 </details>
+<!-- Plugin description end -->
 
 ## Installation
 
@@ -79,7 +79,7 @@ You can choose themes based on characters from these various Anime, Manga, or Vi
 
 - Manually:
 
-  Download the [latest release](https://github.com/doki-theme/doki-theme-jetbrains/releases/latest) and install it manually using
+  Download the [latest release](https://github.com/kit-nya/doki-theme-jetbrains/releases/latest) and install it manually using
   <kbd>Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
 
 
@@ -375,11 +375,11 @@ Great! I am glad you like it!
 
 Be sure to ⭐ and share it with other weebs!
 
-Also, giving it a good [review on the plugins page](https://plugins.jetbrains.com/plugin/10804-doki-doki-literature-club-theme) will help this plugin become visible to more otaku!
+Also, giving it a good [review on the plugins page](https://plugins.jetbrains.com/plugin/30534-doki-theme-v2/) will help this plugin become visible to more otaku!
 
 ## Contributions?
 
-I think your voice needs to be heard! You probably have good ideas, so feel free to submit your feedback as [an issue](https://github.com/doki-theme/doki-theme-jetbrains/issues/new).
+I think your voice needs to be heard! You probably have good ideas, so feel free to submit your feedback as [an issue](https://github.com/kit-nya/doki-theme-jetbrains/issues/new).
 
 Help make this plugin better!
 
@@ -390,7 +390,7 @@ Want updates sooner? I have a [canary release channel](https://github.com/Unthro
 ## Changelog
 
 Did you know I keep a changelog?
-[You can find it here!](./changelog/CHANGELOG.md)
+[You can find it here!](./CHANGELOG.md)
 
 ---
 
