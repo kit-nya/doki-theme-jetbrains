@@ -125,16 +125,13 @@ intellijPlatform {
   }
 
   signing {
-    certificateChain = providers.environmentVariable("CERTIFICATE_CHAIN").map { decodeBase64(it) }
-    privateKey = providers.environmentVariable("PRIVATE_KEY").map { decodeBase64(it) }
-    password = providers.environmentVariable("PRIVATE_KEY_PASSWORD")
+    certificateChain.set(providers.environmentVariable("CERTIFICATE_CHAIN").map { decodeBase64(it) })
+    privateKey.set(providers.environmentVariable("PRIVATE_KEY").map { decodeBase64(it) })
+    password.set(providers.environmentVariable("PRIVATE_KEY_PASSWORD"))
   }
 
   publishing {
-    token = providers.environmentVariable("PUBLISH_TOKEN")
-    // The pluginVersion is based on the SemVer (https://semver.org) and supports pre-release labels, like 2.1.7-alpha.3
-    // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
-    // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
+    token.set(providers.environmentVariable("PUBLISH_TOKEN"))
     channels = providers.gradleProperty("pluginVersion").map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
   }
 
