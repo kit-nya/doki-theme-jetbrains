@@ -125,13 +125,27 @@ intellijPlatform {
   }
 
   signing {
-    certificateChain.set(providers.environmentVariable("CERTIFICATE_CHAIN").map { decodeBase64(it) })
-    privateKey.set(providers.environmentVariable("PRIVATE_KEY").map { decodeBase64(it) })
-    password.set(providers.environmentVariable("PRIVATE_KEY_PASSWORD"))
+    certificateChain.set(
+      providers.environmentVariable("CERTIFICATE_CHAIN")
+        .filter { it.isNotBlank() }
+        .map { decodeBase64(it) }
+    )
+    privateKey.set(
+      providers.environmentVariable("PRIVATE_KEY")
+        .filter { it.isNotBlank() }
+        .map { decodeBase64(it) }
+    )
+    password.set(
+      providers.environmentVariable("PRIVATE_KEY_PASSWORD")
+        .filter { it.isNotBlank() }
+    )
   }
 
   publishing {
-    token.set(providers.environmentVariable("PUBLISH_TOKEN").orElse(providers.gradleProperty("publishToken")))
+    token.set(
+      providers.environmentVariable("PUBLISH_TOKEN")
+        .filter { it.isNotBlank() }
+    )
     channels = providers.gradleProperty("pluginVersion").map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
   }
 
