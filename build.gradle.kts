@@ -146,7 +146,14 @@ intellijPlatform {
       providers.environmentVariable("PUBLISH_TOKEN")
         .filter { it.isNotBlank() }
     )
-    channels = providers.gradleProperty("pluginVersion").map { listOf(it.substringAfter('-', "").substringBefore('.').ifEmpty { "default" }) }
+    channels.set(providers.gradleProperty("pluginVersion").map { 
+      val channel = it.substringAfter('-', "").substringBefore('.')
+      if (channel.isEmpty() || channel.all { c -> c.isDigit() }) {
+        listOf("stable")
+      } else {
+        listOf(channel)
+      }
+    })
   }
 
   pluginVerification {
