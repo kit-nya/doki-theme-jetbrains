@@ -1,7 +1,6 @@
 package io.unthrottled.doki.integrations
 
 import com.google.gson.Gson
-import com.intellij.ide.IdeBundle
 import com.intellij.ide.ui.LafManager
 import com.intellij.openapi.application.ApplicationInfo
 import com.intellij.openapi.application.ApplicationNamesInfo
@@ -106,13 +105,13 @@ class ErrorReporter : ErrorReportSubmitter() {
   private fun getJRE(properties: Properties): String {
     val javaVersion = properties.getProperty("java.runtime.version", properties.getProperty("java.version", "unknown"))
     val arch = properties.getProperty("os.arch", "")
-    return IdeBundle.message("about.box.jre", javaVersion, arch)
+    return "JRE: $javaVersion ($arch)"
   }
 
   private fun getVM(properties: Properties): String {
     val vmVersion = properties.getProperty("java.vm.name", "unknown")
     val vmVendor = properties.getProperty("java.vendor", "unknown")
-    return IdeBundle.message("about.box.vm", vmVersion, vmVendor)
+    return "VM: $vmVersion by $vmVendor"
   }
 
   private fun getGC() =
@@ -120,14 +119,14 @@ class ErrorReporter : ErrorReportSubmitter() {
       .map { it.name }.collect(Collectors.joining(","))
 
   private fun getBuildInfo(appInfo: ApplicationInfo): String {
-    var buildInfo = IdeBundle.message("about.box.build.number", appInfo.build.asString())
+    var buildInfo = "Build #${appInfo.build.asString()}"
     val cal = appInfo.buildDate
     var buildDate = ""
     if (appInfo.build.isSnapshot) {
       buildDate = SimpleDateFormat("HH:mm, ").format(cal.time)
     }
     buildDate += DateFormatUtil.formatDate(cal.time)
-    buildInfo += IdeBundle.message("about.box.build.date", buildDate)
+    buildInfo += ", built on $buildDate"
     return buildInfo
   }
 

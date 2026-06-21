@@ -1,8 +1,8 @@
 package io.unthrottled.doki.notification
 
-import com.intellij.ide.plugins.PluginManager
-import com.intellij.ide.plugins.PluginManagerCore.getPlugin
 import com.intellij.notification.Notification
+import io.unthrottled.doki.TheDokiTheme
+import io.unthrottled.doki.PluginMetadata
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.actionSystem.AnAction
@@ -421,13 +421,7 @@ object UpdateNotification : Logging {
   }
 
   fun getPluginUpdateTitle(): String {
-    val pluginName =
-      getPlugin(
-        PluginManager.getPluginByClass(
-          UpdateNotification::class.java,
-        )?.pluginId,
-      )?.name
-    return "$pluginName Update"
+    return "${PluginMetadata.name} Update"
   }
 
   fun reconstructUrlAndContent(dokiTheme: DokiTheme): Pair<String, String> {

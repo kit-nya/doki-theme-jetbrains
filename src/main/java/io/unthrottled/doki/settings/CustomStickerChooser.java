@@ -2,7 +2,6 @@ package io.unthrottled.doki.settings;
 
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.ui.DialogWrapper;
@@ -39,7 +38,7 @@ public class CustomStickerChooser extends DialogWrapper {
     ExtendableTextField extendableTextField = new ExtendableTextField();
     extendableTextField.addBrowseExtension(
       () -> {
-        FileChooserDescriptor descriptor = FileChooserDescriptorFactory.createSingleFileDescriptor();
+        FileChooserDescriptor descriptor = new FileChooserDescriptor(true, false, false, false, false, false);
         descriptor.setTitle(MessageBundle.message("settings.general.content.custom.sticker.modal.chooser.title"));
         descriptor.setDescription(MessageBundle.message("settings.general.content.custom.sticker.modal.chooser.description"));
         VirtualFile file = FileChooser.chooseFile(descriptor, null, null);

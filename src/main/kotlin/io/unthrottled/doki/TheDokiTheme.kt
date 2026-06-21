@@ -1,6 +1,5 @@
 package io.unthrottled.doki
 
-import com.intellij.ide.plugins.PluginManagerCore
 import com.intellij.ide.ui.LafManagerListener
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationActivationListener
@@ -36,21 +35,13 @@ import java.util.UUID
 class TheDokiTheme : Disposable {
   companion object {
     const val COMMUNITY_PLUGIN_ID = "io.unthrottled.DokiThemeV2"
-    private const val ULTIMATE_PLUGIN_ID = "io.unthrottled.DokiTheme"
+    const val ULTIMATE_PLUGIN_ID = "io.unthrottled.DokiTheme"
 
     val instance: TheDokiTheme
       get() = ApplicationManager.getApplication().getService(TheDokiTheme::class.java)
 
     fun getVersion(): Optional<String> =
-      PluginManagerCore.getPlugin(PluginId.getId(COMMUNITY_PLUGIN_ID))
-        .toOptional()
-        .map { it.toOptional() }
-        .orElseGet {
-          PluginManagerCore.getPlugin(
-            PluginId.getId(ULTIMATE_PLUGIN_ID),
-          ).toOptional()
-        }
-        .map { it.version }
+      Optional.of(PluginMetadata.version)
   }
 
   private val connection = ApplicationManager.getApplication().messageBus.connect()
@@ -157,5 +148,28 @@ class TheDokiTheme : Disposable {
   }
 
   fun init() {
+  }
+}
+
+object PluginMetadata {
+  val name: String
+  val version: String
+  init {
+    var parsedName = "Doki Theme"
+    var parsedVersion = "unknown"
+    try {
+      val resource = PluginMetadata::class.java.classLoader.getResourceAsStream("META-INF/plugin.xml")
+      if (resource != null) {
+        val content = resource.bufferedReader().use { it.readText() }
+        val nameMatcher = java.util.regex.Pattern.compile("<name>(.*?)</name>").matcher(content)
+        if (nameMatcher.find()) parsedName = nameMatcher.group(1)
+        val versionMatcher = java.util.regex.Pattern.compile("<version>(.*?)</version>").matcher(content)
+        if (versionMatcher.find()) parsedVersion = versionMatcher.group(1)
+      }
+    } catch (e: Exception) {
+      // ignore
+    }
+    name = parsedName
+    version = parsedVersion
   }
 }
