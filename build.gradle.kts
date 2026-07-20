@@ -22,6 +22,7 @@ plugins {
   alias(libs.plugins.intelliJPlatform) // IntelliJ Platform Gradle Plugin
   alias(libs.plugins.changelog) // Gradle Changelog Plugin
   alias(libs.plugins.kover) // Gradle Kover Plugin
+  alias(libs.plugins.sentry) // Sentry Gradle Plugin
 }
 
 group = providers.gradleProperty("pluginGroup").get()
@@ -181,6 +182,17 @@ kover {
       }
     }
   }
+}
+
+sentry {
+  // Generates a JVM (Java, Kotlin, etc.) source bundle and uploads your source code to Sentry.
+  // This enables source context, allowing you to see your source
+  // code as part of your stack traces in Sentry.
+  includeSourceContext.set(true)
+
+  org.set("kittu-tt")
+  projectName.set("kotlin")
+  authToken.set(System.getenv("SENTRY_AUTH_TOKEN"))
 }
 
 configurations.all {

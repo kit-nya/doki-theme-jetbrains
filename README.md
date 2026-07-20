@@ -6,7 +6,7 @@ Doki Theme v2: Jetbrains IDEs
 ![Version](https://img.shields.io/jetbrains/plugin/v/30534)
 ![Build](https://github.com/kit-nya/doki-theme-jetbrains/workflows/Release/badge.svg)
 
-### https://doki-theme.unthrottled.io/
+### https://doki.kittu.dev/
 
 ## Quick Theme Preview
 
@@ -141,7 +141,7 @@ you do not have to explain anything, to anyone (except for the heart themed fold
 When the coast is clear, just uncheck the config or toggle the action, and your previous settings will be restored.
 
 
-This plugin is also integrated with the [Anime Meme Plugin](https://github.com/ani-memes/AMII#discreet-mode), for the ultimate shame hiding experience.
+This plugin is also integrated with the [Anime Meme Plugin](https://github.com/kit-nya/AMII#discreet-mode), for the ultimate shame hiding experience.
 Enabling/disabling `Discreet Mode` for this plugin will enable/disable `Discrete Mode` in the other plugin. However, this does not work the other way around. 
 Only the Doki Theme can enable/disable modes across plugins.
 
@@ -263,7 +263,7 @@ that appears when all tabs are closed, with the current theme's official wallpap
 #### Suggestive Content
 
 <div align="center">
-    <img src="https://doki.assets.unthrottled.io/misc/suggestive/cultured.gif" ></img>
+    <img src="https://doki.assets.kittu.dev/misc/suggestive/cultured.gif" ></img>
 </div>
 
 So I thought it was a good idea to add a bit of culture to this plugin.
@@ -303,7 +303,7 @@ You can see a rough example in the [quick theme switch section.](#quick-theme-sw
 ### Promotional Content
 
 I am a weeb who builds a lot of neat weebie things. A lot of which I think you will enjoy.
-By default, I have opted you into receiving a _single_ promotion to the [AniMeme Plugin](https://github.com/ani-memes/AMII#amii-anime-meme-ide-integration).
+By default, I have opted you into receiving a _single_ promotion to the [AniMeme Plugin](https://github.com/kit-nya/AMII#amii-anime-meme-ide-integration).
 This notification window _will_ show up when your IDE has been idle, and you've met these following conditions:
 
 - You are online
@@ -333,14 +333,14 @@ This only applies to any Doki Themes. You must enable the `Override Console Font
 ## Doki Icons
 
 <div align="center">
-    <img src="https://doki.assets.unthrottled.io/misc/doki_icons_logo.svg" ></img>
+    <img src="https://doki.assets.kittu.dev/misc/doki_icons_logo.svg" ></img>
 </div>
 
 **Emilia Light**
 
 ![Icons Preview](./assets/readmeAssets/doki_icons.png)
 
-Give your IDE that extra something with the [Doki Theme Icons](https://github.com/doki-theme/doki-theme-icons-jetbrains#doki-theme-icons-jetbrains).
+Give your IDE that extra something with the [Doki Theme Icons](https://github.com/kit-nya/doki-theme-icons-jetbrains#doki-theme-icons-jetbrains).
 Custom tailored to work well with your favorite theme! 
 
 
@@ -359,15 +359,15 @@ to browse the `Look and Feel`.
 
 ## Plugin Art
 
-In order to prevent this plugin from being a huge artifact, the assets used for the background and stickers are downloaded from https://doki.assets.unthrottled.io when needed.
+In order to prevent this plugin from being a huge artifact, the assets used for the background and stickers are downloaded from https://doki.assets.kittu.dev when needed.
 This allows me to update the assets without users needing to update the plugin as well.
 
-I also have them committed to GitHub as well at https://github.com/doki-theme/doki-theme-assets .
+I also have them committed to GitHub as well at https://github.com/kit-nya/doki-theme-assets .
 You should be able to find what you are looking for in the `backgrounds/wallpapers` & `stickers` directories.
 
 ## Theme Requests
 
-If you want your main squeeze to be featured in the Doki Theme suite, feel free to [submit a theme request](https://github.com/doki-theme/doki-master-theme/issues).
+If you want your main squeeze to be featured in the Doki Theme suite, feel free to [submit a theme request](https://github.com/kit-nya/doki-master-theme/issues).
 
 ## Enjoying the plugin?
 
@@ -385,7 +385,7 @@ Help make this plugin better!
 
 ## Release channel
 
-Want updates sooner? I have a [canary release channel](https://github.com/Unthrottled/jetbrains-plugin-repository) that you can set up to get the latest and greatest!
+Want updates sooner? A canary release channel is coming soon under the new `kit-nya` project — stay tuned!
 
 ## Changelog
 
@@ -402,7 +402,7 @@ Project uses icons from [Twemoji](https://github.com/twitter/twemoji). Graphics 
 ---
 
 <div align="center">
-    <img src="https://doki.assets.unthrottled.io/misc/logo_v2.svg" ></img>
+    <img src="https://doki.assets.kittu.dev/misc/logo_v2.svg" ></img>
 </div>
 
 

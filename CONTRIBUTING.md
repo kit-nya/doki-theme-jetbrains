@@ -28,14 +28,14 @@ that are not captured by the global shared style.
 **Get the Master Themes**
 
 Since this theme suite expands across multiple platforms, in order to maintain consistency of the look and feel across
-platforms, there is a [central theme definition repository](https://github.com/doki-theme/doki-master-theme)
+platforms, there is a [central theme definition repository](https://github.com/kit-nya/doki-master-theme)
 
 This repository needs to be cloned as a directory called `masterThemes`. If you are running Linux/MacOS, you can
 run `getMasterThemes.sh` located at the root of this repository. This script does exactly what is required, if you are
 on Windows, have you considered Linux? Just kidding (mostly), you'll need to run this command
 
 ```shell
-git clone https://github.com/doki-theme/doki-master-theme.git masterThemes
+git clone https://github.com/kit-nya/doki-master-theme.git masterThemes
 ```
 
 Once that is done, for extra points, you can register the `masterThemes` directory, in Intellij, as another VCS root.
@@ -45,7 +45,7 @@ Once that is done, for extra points, you can register the `masterThemes` directo
 ## Build Setup
 
 I have several codebases that I maintain which have a similar build processes. 
-So to reduce maintenance overhead, this repository uses https://github.com/doki-theme/doki-build-source-jvm .
+So to reduce maintenance overhead, this repository uses https://github.com/kit-nya/doki-build-source-jvm .
 
 Doing so requires special setup for your development environment.
 
@@ -135,7 +135,7 @@ Follow the [editing themes setup](#editing-themes-setup)
 
 **Get the assets repository**
 
-Clone the [doki-theme-assets](https://github.com/doki-theme/doki-theme-assets) repository in the same parent directory
+Clone the [doki-theme-assets](https://github.com/kit-nya/doki-theme-assets) repository in the same parent directory
 as this plugin's repository.
 
 Your folder structure should look like this:
@@ -189,7 +189,7 @@ Once you have a new master theme definition, it's now time to generate the appli
 us to control individual theme specific settings.
 
 You'll want to edit the function used by `buildApplicationTemplate`
-and `appName` [defined here](https://github.com/doki-theme/doki-master-theme/blob/596bbe7b258c65e485257a14887ee9b4e0e8b659/buildSrc/AppThemeTemplateGenerator.ts#L79)
+and `appName` [defined here](https://github.com/kit-nya/doki-master-theme/blob/596bbe7b258c65e485257a14887ee9b4e0e8b659/buildSrc/AppThemeTemplateGenerator.ts#L79)
 in your `masterThemes` directory.
 
 In the case of this plugin the `buildApplicationsTemplate` should use the `jetbrainsTemplate` and `appName` should

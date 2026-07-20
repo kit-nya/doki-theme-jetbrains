@@ -8,6 +8,7 @@ changelog = "2.5.0"
 intelliJPlatform = "2.16.0"
 kotlin = "2.3.0"
 kover = "0.9.5"
+sentry = "6.15.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -18,3 +19,4 @@ changelog = { id = "org.jetbrains.changelog", version.ref = "changelog" }
 intelliJPlatform = { id = "org.jetbrains.intellij.platform", version.ref = "intelliJPlatform" }
 kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "kover" }
+sentry = { id = "io.sentry.jvm.gradle", version.ref = "sentry" }

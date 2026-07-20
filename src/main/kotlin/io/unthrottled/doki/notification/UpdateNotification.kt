@@ -58,15 +58,15 @@ private fun buildUpdateMessage(
       """
       <p>Looks like you are new, <strong>welcome!</strong> You now have a <em>lot</em> of themes now.<br />
           Feel free to browse <br /> <a
-            href="https://doki-theme.unthrottled.io/themes">https://doki-theme.unthrottled.io/themes</a></p>
+            href="https://doki.kittu.dev/themes">https://doki.kittu.dev/themes</a></p>
       """.trimIndent()
     } else {
       //language=html
       """
       <p><strong>Thank You</strong> for updating! I changed some things.<br />
           You can find more information here: <br /> <a
-            href="https://doki-theme.unthrottled.io/products/jetbrains/updates/$versionNumber?themeId=${currentTheme.id}">
-              https://doki-theme.unthrottled.io/products/jetbrains/updates/$versionNumber
+            href="https://doki.kittu.dev/products/jetbrains/updates/$versionNumber?themeId=${currentTheme.id}">
+              https://doki.kittu.dev/products/jetbrains/updates/$versionNumber
       </a></p>
       """.trimIndent()
     }
@@ -83,14 +83,14 @@ private fun buildUpdateMessage(
         <style>
             @font-face {
                 font-family: "Victor Mono";
-                src: url("https://doki-theme.unthrottled.io/victor-mono/VictorMono-MediumItalic.woff") format("woff");
+                src: url("https://doki.kittu.dev/victor-mono/VictorMono-MediumItalic.woff") format("woff");
                 font-weight: 300;
                 font-style: italic;
             }
 
             @font-face {
                 font-family: "Victor Mono";
-                src: url("https://doki-theme.unthrottled.io/victor-mono/VictorMono-Medium.woff") format("woff");
+                src: url("https://doki.kittu.dev/victor-mono/VictorMono-Medium.woff") format("woff");
                 font-weight: 700;
                 font-style: normal;
             }
@@ -192,7 +192,7 @@ private fun buildUpdateMessage(
             z-index: 0;
             top: 0;
             left: 0;
-            background: url('https://doki.assets.unthrottled.io/backgrounds/wallpapers/transparent/smol/${background.name}') $anchor;
+            background: url('https://doki.assets.kittu.dev/backgrounds/wallpapers/transparent/smol/${background.name}') $anchor;
             background-size: cover;
           }
 
@@ -416,7 +416,7 @@ object UpdateNotification : Logging {
       } else {
         "/products/jetbrains/updates/$newVersion"
       }
-    val url = "https://doki-theme.unthrottled.io$urlParameters?themeId=${currentTheme.id}"
+    val url = "https://doki.kittu.dev$urlParameters?themeId=${currentTheme.id}"
     return url
   }
 
