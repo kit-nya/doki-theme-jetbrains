@@ -1,5 +1,6 @@
 ## [Unreleased]
 - Added github actions for CI
+- Fixed MockK-based tests (e.g. `PromotionManagerIntegrationTest`) failing on JDK 25 with `class redefinition failed: attempted to change the schema` by disabling Kover instrumentation for the test tasks (Kover's coverage agent conflicts with MockK inline mocking)
 - Merged change to fix file names appearing weird when zooming
 - Updated build to target the latest JetBrains IDEs (IntelliJ Platform 2026.2) on JetBrains Runtime 25
 - Raised minimum supported IDE to 2026.1 (build 261) and switched the build to the Java 25 toolchain

@@ -175,6 +175,17 @@ changelog {
 
 // Configure Gradle Kover Plugin - read more: https://kotlin.github.io/kotlinx-kover/gradle-plugin/#configuration-details
 kover {
+  currentProject {
+    instrumentation {
+      // Kover's coverage agent and MockK's inline mocking (mockkObject/mockkStatic) both retransform
+      // classes at runtime. On JDK 25 (IDE platform 2026.1+ runs on JBR 25) this collision makes the
+      // JVM reject MockK's retransformation with "class redefinition failed: attempted to change the
+      // schema (add/remove fields)", failing the MockK-based tests (e.g. PromotionManagerIntegrationTest).
+      // Disabling Kover instrumentation for the test tasks avoids the double-instrumentation conflict.
+      // See JetBrains IDEA-382654 (Kover + MockK "class redefinition failed").
+      disabledForAll = true
+    }
+  }
   reports {
     total {
       xml {
