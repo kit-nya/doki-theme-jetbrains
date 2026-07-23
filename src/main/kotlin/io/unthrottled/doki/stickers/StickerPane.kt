@@ -7,7 +7,6 @@ import com.intellij.ui.JreHiDpiUtil
 import com.intellij.ui.awt.RelativePoint
 import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBLayeredPane
-import com.intellij.ui.jcef.HwFacadeJPanel
 import com.intellij.ui.scale.JBUIScale
 import com.intellij.util.Alarm
 import com.intellij.util.ui.Animator
@@ -71,7 +70,7 @@ internal class StickerPane(
   val type: StickerType,
   initialMargin: Margin,
   private val stickerListener: StickerListener,
-) : HwFacadeJPanel(), Disposable, Logging {
+) : JPanel(), Disposable, Logging {
   private lateinit var stickerContent: JPanel
 
   var ignoreScaling = ThemeConfig.instance.ignoreScaling

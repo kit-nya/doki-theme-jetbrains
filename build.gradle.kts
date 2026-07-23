@@ -30,12 +30,12 @@ version = providers.gradleProperty("pluginVersion").get()
 
 // Set the JVM language level used to build the project.
 kotlin {
-  jvmToolchain(21)
+  jvmToolchain(25)
 }
 
 java {
-  sourceCompatibility = JavaVersion.VERSION_21
-  targetCompatibility = JavaVersion.VERSION_21
+  sourceCompatibility = JavaVersion.VERSION_25
+  targetCompatibility = JavaVersion.VERSION_25
 }
 
 // Configure project's dependencies
@@ -50,11 +50,11 @@ repositories {
 
 // Dependencies are managed with Gradle version catalog - read more: https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
 dependencies {
-  implementation("commons-io:commons-io:2.17.0")
-  implementation("org.javassist:javassist:3.29.2-GA")
+  implementation("commons-io:commons-io:2.22.0")
+  implementation("org.javassist:javassist:3.32.0-GA")
   implementation("io.sentry:sentry:7.17.0")
-  testImplementation("org.assertj:assertj-core:3.25.3")
-  testImplementation("io.mockk:mockk:1.13.13")
+  testImplementation("org.assertj:assertj-core:3.27.7")
+  testImplementation("io.mockk:mockk:1.14.11")
   testImplementation(libs.junit)
   testImplementation(libs.opentest4j)
 
