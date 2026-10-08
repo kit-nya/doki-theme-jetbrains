@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## [88.5-1.16.6] - 2026-10-08
+
+- Fixed small stickers vanishing when full screen mode is enabled or when the IDE relaunches with existing projects
+
 ## [88.5-1.16.5] - 2026-07-26
 
 - Added github actions for CI
@@ -35,7 +39,8 @@
 - Lowest supported version is now 2024.3
 - Compiles to the 2024.3 build
 
-[Unreleased]: https://github.com/kit-nya/doki-theme-jetbrains//compare/88.5-1.16.5...HEAD
+[Unreleased]: https://github.com/kit-nya/doki-theme-jetbrains//compare/88.5-1.16.6...HEAD
+[88.5-1.16.6]: https://github.com/kit-nya/doki-theme-jetbrains//compare/88.5-1.16.5...88.5-1.16.6
 [88.5-1.16.5]: https://github.com/kit-nya/doki-theme-jetbrains//compare/88.5-1.16.3...88.5-1.16.5
 [88.5-1.16.3]: https://github.com/kit-nya/doki-theme-jetbrains//compare/88.5-1.16.0...88.5-1.16.3
 [88.5-1.16.0]: https://github.com/kit-nya/doki-theme-jetbrains//compare/88.5-1.15.0...88.5-1.16.0
