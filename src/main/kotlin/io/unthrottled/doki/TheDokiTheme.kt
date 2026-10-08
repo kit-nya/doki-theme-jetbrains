@@ -60,6 +60,7 @@ class TheDokiTheme : Disposable {
       object : ApplicationActivationListener {
         override fun applicationActivated(ideFrame: IdeFrame) {
           userOnBoarding()
+          StickerPaneService.instance.initExistingWindows()
           ThemeManager.instance.currentTheme.ifPresent {
             setSVGColorPatcher(it)
           }
@@ -92,6 +93,7 @@ class TheDokiTheme : Disposable {
 
   fun projectOpened(project: Project) {
     EXPUIFixer.fixExperimentalUI()
+    StickerPaneService.instance.initExistingWindows()
     ThemeManager.instance.currentTheme
       .ifPresent {
         EditorBackgroundWallpaperService.instance.checkForUpdates(it)

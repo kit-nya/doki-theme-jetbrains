@@ -2,6 +2,7 @@ package io.unthrottled.doki.stickers
 
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.ui.DialogWrapperDialog
+import com.intellij.openapi.wm.IdeFrame
 import com.intellij.openapi.wm.impl.IdeBackgroundUtil
 import io.unthrottled.doki.assets.AssetCategory
 import io.unthrottled.doki.assets.AssetManager
@@ -14,6 +15,8 @@ import io.unthrottled.doki.util.runSafely
 import io.unthrottled.doki.util.toOptional
 import java.awt.AWTEvent
 import java.awt.Toolkit
+import java.awt.Window
+import java.awt.event.ComponentEvent
 import java.awt.event.WindowEvent
 import java.util.Optional
 import java.util.concurrent.ConcurrentHashMap
@@ -37,11 +40,10 @@ class StickerPaneService {
     Toolkit.getDefaultToolkit().addAWTEventListener(
       { awtEvent ->
         when (awtEvent.id) {
-          WindowEvent.WINDOW_OPENED -> {
-            when (val window = awtEvent.source) {
-              is JFrame -> captureFrame(window)
-              is DialogWrapperDialog -> captureDialogWrapper(window)
-            }
+          WindowEvent.WINDOW_OPENED,
+          WindowEvent.WINDOW_ACTIVATED,
+          ComponentEvent.COMPONENT_SHOWN -> {
+            captureWindow(awtEvent.source)
           }
 
           WindowEvent.WINDOW_CLOSED -> {
@@ -52,11 +54,29 @@ class StickerPaneService {
           }
         }
       },
-      AWTEvent.WINDOW_EVENT_MASK,
+      AWTEvent.WINDOW_EVENT_MASK or AWTEvent.COMPONENT_EVENT_MASK,
     )
+    initExistingWindows()
   }
 
-  fun init() {}
+  fun init() {
+    initExistingWindows()
+  }
+
+  fun initExistingWindows() {
+    ApplicationManager.getApplication()?.invokeLater {
+      Window.getWindows().forEach { window ->
+        captureWindow(window)
+      }
+    }
+  }
+
+  fun captureWindow(window: Any) {
+    when (window) {
+      is JFrame -> captureFrame(window)
+      is DialogWrapperDialog -> captureDialogWrapper(window)
+    }
+  }
 
   fun resetMargins() {
     MarginService.instance.reset()
@@ -119,7 +139,8 @@ class StickerPaneService {
 
   private fun captureFrame(window: JFrame) {
     if (!isRightClass(window)) return
-    val drawablePane = window.rootPane.layeredPane
+    if (windowsToAddStickersTo.containsKey(window)) return
+    val drawablePane = window.rootPane?.layeredPane ?: return
     val stickerPane =
       StickerPane(
         drawablePane,
@@ -138,6 +159,7 @@ class StickerPaneService {
   }
 
   private fun captureDialogWrapper(wrapper: DialogWrapperDialog) {
+    if (windowsToAddStickersTo.containsKey(wrapper)) return
     val drawablePane = wrapper.dialogWrapper?.rootPane?.layeredPane ?: return
     val stickerPane =
       StickerPane(
@@ -179,7 +201,8 @@ class StickerPaneService {
       }
   }
 
-  private fun isRightClass(window: Any): Boolean = allowedFrames.contains(window.javaClass.name)
+  private fun isRightClass(window: Any): Boolean =
+    window is IdeFrame || allowedFrames.contains(window.javaClass.name)
 
   private fun displayStickers(
     currentTheme: DokiTheme,
