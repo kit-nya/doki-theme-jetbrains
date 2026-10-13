@@ -227,6 +227,25 @@ tasks {
   patchPluginXml {
     dependsOn("buildThemes")
   }
+
+  register("exportChangelogJson") {
+    group = "documentation"
+    description = "Exports changelog entries as JSON for consumption by doki-theme-home"
+    doLast {
+      val changelog = project.changelog
+      val allVersions = changelog.getAll()
+      val jsonEntries = allVersions.map { (ver, item) ->
+        val rendered = changelog.renderItem(
+          item.withHeader(false).withEmptySections(false),
+          Changelog.OutputType.MARKDOWN
+        )
+        """{"version":"$ver","changes":${groovy.json.JsonOutput.toJson(rendered)}}"""
+      }
+      val outputFile = file("build/changelog.json")
+      outputFile.parentFile.mkdirs()
+      outputFile.writeText("[${jsonEntries.joinToString(",")}]")
+    }
+  }
 }
 
 intellijPlatformTesting {
