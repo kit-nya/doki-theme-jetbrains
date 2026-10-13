@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+- Fix issues with newer jetbrains version
 
 ## [88.5-1.16.6] - 2026-10-08
 
