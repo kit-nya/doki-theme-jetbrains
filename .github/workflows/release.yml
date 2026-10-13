@@ -1,64 +1,80 @@
-# GitHub Actions Workflow created for handling the release process based on the draft release prepared with the Build workflow.
-# Running the publishPlugin task requires all the following secrets to be provided: PUBLISH_TOKEN, PRIVATE_KEY, PRIVATE_KEY_PASSWORD, CERTIFICATE_CHAIN.
+# GitHub Actions Workflow created for handling the release process.
+# When a release is published, this workflow automatically bumps the version in gradle.properties,
+# patches CHANGELOG.md by shifting unreleased notes into the versioned section, pushes the update to main,
+# and publishes the plugin artifact to JetBrains Marketplace and GitHub Releases.
+# Running the publishPlugin task requires all the following secrets: PUBLISH_TOKEN, PRIVATE_KEY, PRIVATE_KEY_PASSWORD, CERTIFICATE_CHAIN.
 # See https://plugins.jetbrains.com/docs/intellij/plugin-signing.html for more information.
 
 name: Release
 on:
   release:
-    types: [ prereleased, released ]
+    types: [ published, prereleased, released ]
 
 jobs:
 
-  # Prepare and publish the plugin to JetBrains Marketplace repository
   release:
     name: Publish Plugin
     runs-on: ubuntu-latest
     environment: prod
     permissions:
       contents: write
-      pull-requests: write
     steps:
 
-      # Free GitHub Actions Environment Disk Space
-      - name: Maximize Build Space
-        uses: jlumbroso/free-disk-space@v1.3.1
-        with:
-          tool-cache: false
-          large-packages: false
-
-      # Check out the current repository
+      # Check out main branch with full history to allow pushing changelog and tag updates
       - name: Fetch Sources
         uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.release.tag_name }}
+          ref: main
+          fetch-depth: 0
 
-      - name: Get Master Themes
-        run: ./getMasterThemes.sh
-
-      # Set up the Java environment for the next steps
       - name: Setup Java
         uses: actions/setup-java@v5
         with:
           distribution: zulu
-          java-version: 21
+          java-version: 25
 
-      # Setup Gradle
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
-        with:
-          cache-read-only: true
 
-      # Update the Unreleased section with the current release note
-      - name: Patch Changelog
-        if: ${{ github.event.release.body != '' }}
+      # Bump version and patch CHANGELOG.md with unreleased notes / release body
+      - name: Patch Changelog and Bump Version
         env:
-          CHANGELOG: ${{ github.event.release.body }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG_NAME: ${{ github.event.release.tag_name }}
+          RELEASE_BODY: ${{ github.event.release.body }}
         run: |
+          VERSION="${TAG_NAME#v}"
+          echo "Publishing version: $VERSION"
+
+          # Update pluginVersion in gradle.properties
+          sed -i "s/^pluginVersion = .*/pluginVersion = $VERSION/" gradle.properties
+
+          # Patch CHANGELOG.md
           RELEASE_NOTE="./build/tmp/release_note.txt"
           mkdir -p "$(dirname "$RELEASE_NOTE")"
-          echo "$CHANGELOG" > $RELEASE_NOTE
+          if [ -n "$RELEASE_BODY" ]; then
+            echo "$RELEASE_BODY" > "$RELEASE_NOTE"
+            ./gradlew patchChangelog -PpluginVersion="$VERSION" --release-note-file="$RELEASE_NOTE"
+          else
+            ./gradlew patchChangelog -PpluginVersion="$VERSION"
+          fi
 
-          ./gradlew patchChangelog --release-note-file=$RELEASE_NOTE
+          # Commit and push updated CHANGELOG.md and gradle.properties to main
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add CHANGELOG.md gradle.properties
+          if ! git diff --staged --quiet; then
+            git commit -m "Release $VERSION [skip ci]"
+            git push origin main
+
+            # Update release tag to point to the release commit
+            git tag -f "$TAG_NAME"
+            git push origin -f "$TAG_NAME"
+          fi
+
+      - name: Get Master Themes
+        run: ./getMasterThemes.sh
 
       # Publish the plugin to JetBrains Marketplace
       - name: Publish Plugin
@@ -70,36 +86,8 @@ jobs:
           PRIVATE_KEY_PASSWORD: ${{ secrets.PRIVATE_KEY_PASSWORD }}
         run: ./gradlew publishPlugin
 
-      # Upload an artifact as a release asset
+      # Upload the built artifact as a release asset
       - name: Upload Release Asset
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh release upload ${{ github.event.release.tag_name }} ./build/distributions/*.zip
-
-      # Create a pull request
-      - name: Create Pull Request
-        if: ${{ github.event.release.body != '' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          VERSION="${{ github.event.release.tag_name }}"
-          BRANCH="changelog-update-$VERSION"
-          LABEL="release changelog"
-
-          git config user.email "action@github.com"
-          git config user.name "GitHub Action"
-
-          git checkout -b $BRANCH
-          git commit -am "Changelog update - $VERSION"
-          git push --set-upstream origin $BRANCH
-
-          gh label create "$LABEL" \
-            --description "Pull requests with release changelog update" \
-            --force \
-            || true
-
-          gh pr create \
-            --title "Changelog update - \`$VERSION\`" \
-            --body "Current pull request contains patched \`CHANGELOG.md\` file for the \`$VERSION\` version." \
-            --label "$LABEL" \
-            --head $BRANCH
+        run: gh release upload ${{ github.event.release.tag_name }} ./build/distributions/*.zip --clobber

@@ -167,10 +167,11 @@ intellijPlatform {
 // Configure Gradle Changelog Plugin - read more: https://github.com/JetBrains/gradle-changelog-plugin
 changelog {
   path.set(file("CHANGELOG.md").path)
-  headerParserRegex.set("""^\[?([^\]\s]+)\]?.*""".toRegex())
+  headerParserRegex.set("""^(?:##\s+)?\[?v?([0-9A-Za-z_.\-]+)\]?.*""".toRegex())
   groups.empty()
   repositoryUrl = providers.gradleProperty("pluginRepositoryUrl")
   versionPrefix = ""
+  combinePreReleases.set(false)
 }
 
 // Configure Gradle Kover Plugin - read more: https://kotlin.github.io/kotlinx-kover/gradle-plugin/#configuration-details
@@ -225,10 +226,6 @@ tasks {
 
   patchPluginXml {
     dependsOn("buildThemes")
-  }
-
-  publishPlugin {
-    dependsOn(patchChangelog)
   }
 }
 
