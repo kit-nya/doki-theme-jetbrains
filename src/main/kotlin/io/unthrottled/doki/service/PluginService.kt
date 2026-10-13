@@ -1,9 +1,8 @@
 package io.unthrottled.doki.service
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
-import com.fasterxml.jackson.core.type.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
+import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
+import com.google.gson.reflect.TypeToken
 import com.intellij.ide.plugins.PluginManagerCore
 import com.intellij.openapi.application.ApplicationInfo
 import com.intellij.openapi.application.ApplicationManager
@@ -15,6 +14,8 @@ import io.unthrottled.doki.util.Logging
 import io.unthrottled.doki.util.logger
 import io.unthrottled.doki.util.runSafelyWithResult
 import io.unthrottled.doki.util.toOptional
+import java.io.InputStreamReader
+import java.nio.charset.StandardCharsets
 import java.util.Collections
 import java.util.concurrent.Callable
 
@@ -24,7 +25,7 @@ const val RANDOMIZER_PLUGIN_ID = "io.unthrottled.theme.randomizer"
 const val DOKI_ICONS_PLUGIN_ID = "io.unthrottled.doki.icons"
 
 object PluginService : Logging {
-  private val objectMapper by lazy { ObjectMapper() }
+  private val gson by lazy { Gson() }
 
   fun isMotivatorInstalled(): Boolean =
     PluginManagerCore.isPluginInstalled(
@@ -67,13 +68,12 @@ object PluginService : Logging {
    * [externalUpdateId] update ID from Plugin Repository database.
    * [externalPluginId] plugin ID from Plugin Repository database.
    */
-  @JsonIgnoreProperties(ignoreUnknown = true)
   data class IdeCompatibleUpdate(
-    @get:JsonProperty("id")
+    @SerializedName("id")
     val externalUpdateId: String = "",
-    @get:JsonProperty("pluginId")
+    @SerializedName("pluginId")
     val externalPluginId: String = "",
-    @get:JsonProperty("pluginXmlId")
+    @SerializedName("pluginXmlId")
     val pluginId: String = "",
     val version: String = "",
   )
@@ -85,7 +85,7 @@ object PluginService : Logging {
       }
 
       val data =
-        objectMapper.writeValueAsString(
+        gson.toJson(
           CompatibleUpdateRequest(
             ApplicationInfo.getInstance()
               .build.asString(),
@@ -98,7 +98,12 @@ object PluginService : Logging {
         .throwStatusCodeException(false)
         .connect {
           it.write(data)
-          objectMapper.readValue(it.inputStream, object : TypeReference<List<IdeCompatibleUpdate>>() {})
+          InputStreamReader(it.inputStream, StandardCharsets.UTF_8).use { reader ->
+            gson.fromJson<List<IdeCompatibleUpdate>>(
+              reader,
+              object : TypeToken<List<IdeCompatibleUpdate>>() {}.type,
+            )
+          } ?: emptyList()
         }
     } catch (e: Exception) {
       logger().warn("Unable to check to see if plugin $ids is compatible for reasons", e)

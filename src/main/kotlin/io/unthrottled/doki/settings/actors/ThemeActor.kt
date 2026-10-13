@@ -40,7 +40,7 @@ object ThemeActor : Logging {
   fun setDokiTheme(possibleDokiTheme: Optional<DokiTheme>) {
     possibleDokiTheme
       .flatMap { dokiTheme ->
-        LafManager.getInstance().installedLookAndFeels
+        LafManager.getInstance().installedThemes
           .firstOrNull { dokiTheme.name == it.name }
           .toOptional()
       }
